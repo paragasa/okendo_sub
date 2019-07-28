@@ -19,6 +19,12 @@
     "@angular/platform-browser": "~8.1.0",
     "@angular/platform-browser-dynamic": "~8.1.0",
     "@angular/router": "~8.1.0",
+    "@ngx-lite/input-star-rating": "^0.3.5",
+    "angular-font-awesome": "^3.1.2",
+    "angular-star-rating": "^4.0.0-beta.3",
+    "css-star-rating": "^1.2.4",
+    "font-awesome": "^4.7.0",
+    "ngx-bootstrap": "^5.1.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

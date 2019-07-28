@@ -1,0 +1,181 @@
+<div class="content-header upper-align">
+  <h1 class="upper-h1">1815 Rose Gold Chronograph Watch - Brown Croco Strap</h1>
+  <h2>{{main_head}}</h2>
+  <div class= "line">
+      <div  class="circle">
+        <i *ngIf="ratingShow || finished" [ngClass]="{'check-show': ratingShow || finished}" class="fa fa-check "></i>
+      </div>
+      <div  class="circle" [ngClass]="{'circle-hidden': ratingShow===false && finished === false}" >
+        <i *ngIf="finished" [ngClass]="{'check-show': finished}" class="fa fa-check "></i>
+      </div> 
+    </div>
+</div>
+
+<div *ngIf="reviewShow" class="content-clean">
+  <div class="container">
+      <form #reviewSub="ngForm"  [formGroup]="reviewForm"  name="reviewForm" class="c-reviewForm" (ngSubmit)="submitReview()">
+          <div  class="c-head" [ngClass]="{'invalid-feedback': reviewForm.get('rating').touched && reviewForm.get('rating').errors}" >Your Rating</div>
+  
+          <ngx-input-star-rating class="stars" formControlName="rating"></ngx-input-star-rating>
+
+          <div  class="c-head" class="invalid-feedback" *ngIf="reviewForm.get('rating').touched && reviewForm.get('rating').hasError('required')">Please enter a title</div>
+          <div  class="c-head" [ngClass]="{'invalid-feedback': reviewForm.get('title').touched && reviewForm.get('title').errors}" >Review Title</div>
+          <div class="form-group">
+            <input [ngClass]="{'is-invalid': reviewForm.get('title').touched && reviewForm.get('title').hasError('required')}"
+            class="form-control"  formControlName="title" type="text" name="title" placeholder="Summary of your experience" />
+            <div  class="c-head" class="invalid-feedback" *ngIf="reviewForm.get('title').touched && reviewForm.get('title').hasError('required')">Please enter a title</div>
+          </div>
+          <div  class="c-head" [ngClass]="{'invalid-feedback': reviewForm.get('review').touched && reviewForm.get('title').errors}" >Your Review</div> 
+          <div class="form-group">
+            <textarea [ngClass]="{'is-invalid': reviewForm.get('review').touched && reviewForm.get('review').hasError('review')}"
+            class="form-control" formControlName="review" name="review" placeholder="Give us some etail what you liked and disliked about the product" rows="14"></textarea>
+            <div  class="c-head" class="invalid-feedback" *ngIf="reviewForm.get('review').touched && reviewForm.get('review').hasError('required')">Please enter a review</div>
+          </div>
+  
+          <p class="c-head" [ngClass]="{'invalid-feedback': reviewForm.get('recommendation').touched && reviewForm.get('recommendation').errors}"  >Would you recommend thise product?</p>
+          <div class="btn-group">
+              <label [ngClass]="{'selected-btn': reviewForm.get('recommendation').value ==='Yes'}" class="btn btn-primary" (click)="toggleRecommendation('Yes')" 
+                     btnCheckbox tabindex="0" FormControlName="recommendation" role="button">Yes</label>
+  
+              <label [ngClass]="{'selected-btn': reviewForm.get('recommendation').value==='No'}" class="btn btn-primary" (click)="toggleRecommendation('No')"
+                     btnCheckbox formControlName="recommendation"
+                     tabindex="0" role="button">No</label>
+           </div>
+           <div  style="margin-top: 10px" class="c-head" class="invalid-feedback" *ngIf="reviewForm.get('recommendation').touched && reviewForm.get('recommendation').hasError('required')">Please enter a recommendation</div>
+
+       </form>
+       <div class="bot-privacy" > 
+            <span>By continuing you agree to our</span>
+          <a href="https://www.okendo.io/end-user-terms/">Terms and Conditions</a>
+          <span>, and </span>
+          <a href="https://www.okendo.io/privacy-policy/">Privacy and Conditions</a> 
+          <button (click)="reviewSub.ngSubmit.emit()" form="reviewSub" type="submit" class="content-button btn btn-primary" >Agree and Continue</button>
+      </div>
+  </div>
+</div> 
+
+<!--   -->
+<div *ngIf="ratingShow" >
+      <form  #ratingSub="ngForm"  [formGroup]="ratingForm"  name="ratingForm" class="rateForm" (ngSubmit)="submitRating()">
+             <div class="rate-group form-control">
+                <div  class="c-head" [ngClass]="{'invalid-feedback': ratingForm.get('quality').touched && ratingForm.get('quality').errors}" >Quality</div> 
+                  <ul >
+                      <li (click)="setQuality(1)"  [ngClass]="{'disable-circle': ratingForm.get('quality').value < 1 ? true: false, 'active' :ratingForm.get('quality').value === 1 }" >1</li>
+                      <li (click)="setQuality(2)"  [ngClass]="{'disable-circle': ratingForm.get('quality').value < 2 ? true: false , 'active' :ratingForm.get('quality').value === 2}" >2</li>               
+                      <li (click)="setQuality(3)"  [ngClass]="{'disable-circle': ratingForm.get('quality').value < 3 ? true: false, 'active' :ratingForm.get('quality').value === 3}" >3</li>
+                      <li (click)="setQuality(4)"  [ngClass]="{'disable-circle': ratingForm.get('quality').value < 4 ? true: false, 'active' :ratingForm.get('quality').value === 4}" >4</li>
+                      <li (click)="setQuality(5)"  [ngClass]="{'disable-circle': ratingForm.get('quality').value < 5 ? true: false , 'active' :ratingForm.get('quality').value === 5}" >5</li>
+                  </ul>
+                  <div>
+                      <span style="float:left">Poor</span>
+                       <span style="float:right">Excellent</span>
+                  </div>
+                  <div  style="margin-top: 10px" class="c-head" class="invalid-feedback" *ngIf="ratingForm.get('quality').touched && ratingForm.get('quality').hasError('required')">Please select a rating</div>
+             </div>
+             <div class="rate-group form-control">
+                <div  class="c-head" [ngClass]="{'invalid-feedback': ratingForm.get('design').touched && ratingForm.get('design').errors}" >Design</div> 
+                <ul >
+                  <li (click)="setDesign(1)" [ngClass]="{'disable-circle': ratingForm.get('design').value < 1 ? true: false, 'active' :ratingForm.get('design').value === 1 }" >1</li>
+                  <li (click)="setDesign(2)" [ngClass]="{'disable-circle': ratingForm.get('design').value < 2 ? true: false , 'active' :ratingForm.get('design').value === 2}" >2</li>               
+                  <li (click)="setDesign(3)"[ngClass]="{'disable-circle': ratingForm.get('design').value < 3 ? true: false, 'active' :ratingForm.get('design').value === 3}" >3</li>
+                  <li  (click)="setDesign(4)" [ngClass]="{'disable-circle': ratingForm.get('design').value < 4 ? true: false, 'active' :ratingForm.get('design').value === 4}" >4</li>
+                  <li (click)="setDesign(5)" [ngClass]="{'disable-circle': ratingForm.get('design').value < 5 ? true: false , 'active' :ratingForm.get('design').value === 5}" >5</li>
+              </ul>
+                    
+                  <div>
+                      <span style="float:left" >Poor</span>
+                       <span style="float:right">Excellent</span>
+                  </div>
+                  <div  style="margin-top: 10px" class="c-head" class="invalid-feedback" *ngIf="ratingForm.get('design').touched && ratingForm.get('design').hasError('required')">Please select a rating</div>
+
+             </div> 
+            <div class="rate-group form-control">
+              <div  class="c-head" [ngClass]="{'invalid-feedback': ratingForm.get('experience').touched && ratingForm.get('experience').errors}" >Experience</div> 
+
+              <ul >
+                  <li (click)="setExperience(1)" [ngClass]="{'disable-circle': ratingForm.get('experience').value < 1 ? true : false , 'active' : ratingForm.get('experience').value === 1 }" > 1</li>
+                  <li (click)="setExperience(2)" [ngClass]="{'disable-circle': ratingForm.get('experience').value < 2 ? true : false , 'active' : ratingForm.get('experience').value === 2 }" > 2</li>              
+                  <li (click)="setExperience(3)" [ngClass]="{'disable-circle': ratingForm.get('experience').value < 3 ? true : false , 'active' : ratingForm.get('experience').value === 3 }" > 3</li>
+                  <li (click)="setExperience(4)" [ngClass]="{'disable-circle': ratingForm.get('experience').value < 4 ? true : false , 'active' : ratingForm.get('experience').value === 4 }" > 4</li>
+                  <li (click)="setExperience(5)" [ngClass]="{'disable-circle': ratingForm.get('experience').value < 5 ? true : false , 'active' : ratingForm.get('experience').value === 5 }" > 5</li>
+                </ul>
+              <div>
+                  <span style="float:left" >Poor</span>
+                    <span style="float:right">Excellent</span>
+                </div>
+                <div  style="margin-top: 10px" class="c-head" class="invalid-feedback" *ngIf="ratingForm.get('experience').touched && ratingForm.get('experience').hasError('required')">Please select a rating</div>
+
+            </div>  
+             
+            <div class="rate-group form-control">
+                <div  class="c-head" >Product Standouts</div> 
+                <span>Choose up to 5 that best apply (optional)</span>
+                 <div>
+                    <div class="btn-list" *ngFor="let option of standoutOptions" >
+                        <label class="btn btn-secondary " (click)="pickStandout(option)" [ngClass]="{'selected-btn': selectedStandouts[option]}"
+                               btnCheckbox tabindex="0"  role="button">{{option}}</label>
+                     </div>
+                 </div>
+                
+            </div>
+        
+            <div class="rate-group form-control">
+                <div class="c-head"><strong>About You</strong></div>
+                <div  class="c-head" [ngClass]="{'invalid-feedback': ratingForm.get('age').touched && ratingForm.get('age').errors}" >Age Range</div> 
+                <span>Choose <strong>one</strong></span>
+                 <div>
+                    <div class="btn-list" *ngFor="let option of ages" >
+                        <label class="btn btn-secondary" (click)="setAge(option)" [ngClass]="{'selected-btn': ratingForm.get('age').value === option}"
+                               btnCheckbox tabindex="0"  role="button">{{option}}</label>
+                     </div>
+                 </div>
+                 <div  style="margin-top: 10px" class="c-head" class="invalid-feedback" *ngIf="ratingForm.get('age').touched && ratingForm.get('age').hasError('required')">Please select a answer</div>
+
+                
+            </div>
+
+            <div class="rate-group form-control">
+                <div  class="c-head" [ngClass]="{'invalid-feedback': ratingForm.get('boughtFor').touched && ratingForm.get('boughtFor').errors}" >Bought For</div> 
+                <span>Choose <strong>one</strong></span>
+                 <div>
+                    <div class="btn-list" *ngFor="let option of boughtForList" >
+                        <label class="btn btn-secondary" (click)="setBought(option)" [ngClass]="{'selected-btn': ratingForm.get('boughtFor').value === option}"
+                               btnCheckbox tabindex="0"  role="button">{{option}}</label>
+                     </div>
+                 </div>
+                 <div  style="margin-top: 10px" class="c-head" class="invalid-feedback" *ngIf="ratingForm.get('boughtFor').touched && ratingForm.get('boughtFor').hasError('required')">Please select a anser</div>
+
+                
+            </div>
+             
+
+            <div class="rate-group form-control">
+                <div  class="c-head" [ngClass]="{'invalid-feedback': ratingForm.get('country').touched && ratingForm.get('country').errors}" >Country</div> 
+
+                <select formControlName="country"  >
+                    <option *ngFor="let option of countries"  [value]="option">
+                      {{option}}
+                    </option>
+                  </select>
+                  <div  style="margin-top: 10px" class="c-head" class="invalid-feedback" *ngIf="ratingForm.get('country').touched && ratingForm.get('country').hasError('required')">Please select a country</div>
+
+            </div>
+  
+    </form>
+    <div class="bot-privacy" > 
+      <button (click)="ratingSub.ngSubmit.emit()" form="ratingSub" type="submit" class="content-button btn btn-primary" >Next</button>
+    </div>
+</div>
+
+<div *ngIf="finished">
+  <div class="confirmpage m-auto">
+    <h1>
+      {{main_head}}
+    </h1>
+    <hr>
+    <h2><strong>Review</strong></h2>
+    <p>{{reviewForm.value | json}}</p>
+    <h2><strong>Review</strong></h2>
+    <p>{{ratingForm.value | json}}</p>
+  </div>
+</div>
